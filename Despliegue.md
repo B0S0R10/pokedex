@@ -29,11 +29,8 @@ npm run build -- --configuration production
 - Verificar que se genera el directorio de distribución con todos los recursos
 - Revisar el tamaño de los bundles generados
 
-<!-- Opción como figura (compatible con algunos renderers) -->
-<figure>
-    <img src="https://i.ibb.co/dw2VT1g6/msedge-n-YXTDg2w-Em.jpg" alt="Visualización del proceso">
-    <figcaption>Figura 1: Proceso de desarrollo y despliegue</figcaption>
-</figure>
+![Diagrama de flujo QA-Producción](https://i.ibb.co/dw2VT1g6/msedge-n-YXTDg2w-Em.jpg)
+
 
 ## 🔒 Configuración de Seguridad Avanzada
 

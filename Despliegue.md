@@ -1,145 +1,144 @@
-Aquí tienes el código completo con la imagen integrada y optimizada:
 
-```markdown
-# 🏗️ Implementación de PokeDex: Flujo QA → Producción en Vercel
+# 🏗️ Implementación de PokeDex en Vercel: Guía Completa
 
-<div align="center">
-  <img src="https://i.ibb.co/dw2VT1g6/msedge-n-YXTDg2w-Em.jpg" alt="Diagrama de flujo completo" width="800" style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-  <p style="font-style: italic; margin-top: 12px; color: #666;">Diagrama 1: Flujo completo desde desarrollo local hasta producción en Vercel</p>
-</div>
+Esta documentación proporciona instrucciones detalladas para publicar la aplicación PokeDex utilizando los servicios en la nube de Vercel, garantizando configuración óptima y medidas de seguridad robustas.
 
-## 🔄 Flujo de Trabajo Recomendado
+## 🔍 Requisitos Previos
 
-1. **Desarrollo local** (Visual Studio) → 
-2. **Pruebas QA** (localhost) → 
-3. **Preproducción** (Vercel Preview) → 
-4. **Producción** (Vercel Production)
+Antes de comenzar, verifica que cumples con estos requisitos esenciales:
 
-## 🛠️ Configuración para Visual Studio
+- ✅ Cuenta activa en [Vercel](https://vercel.com/signup) (disponible en plan gratuito)
+- ✅ Repositorio alojado en GitHub, GitLab o Bitbucket con el código fuente
+- ✅ Entorno de desarrollo con Node.js versión 16 o superior
+- ✅ Gestor de paquetes npm (incluido con Node.js) o yarn
 
-### 1. Perfiles de Ejecución
+## ⚙️ Configuración Inicial del Proyecto
 
-Configura diferentes entornos en `launchSettings.json`:
-
-```json
-{
-  "profiles": {
-    "PokeDex.QA": {
-      "commandName": "Project",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "QA",
-        "API_BASE": "https://qa.api.pokemon.com"
-      }
-    },
-    "PokeDex.Development": {
-      "commandName": "Project",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "API_BASE": "https://dev.api.pokemon.com"
-      }
-    }
-  }
-}
-```
-
-### 2. Variables por Entorno
-
-Crea estos archivos:
-- `appsettings.QA.json`
-- `appsettings.Production.json`
-
-Ejemplo para QA:
-```json
-{
-  "Logging": {
-    "LogLevel": {
-      "Default": "Debug",
-      "System": "Information",
-      "Microsoft": "Warning"
-    }
-  },
-  "ApiEndpoints": {
-    "Pokemon": "https://qa.api.pokemon.com/v2",
-    "Timeout": 30
-  }
-}
-```
-
-## 🚀 Despliegue en Vercel
-
-### Configuración multi-entorno:
-
-```json
-{
-  "build": {
-    "env": {
-      "ENVIRONMENT": "@environment",
-      "API_URL": {
-        "development": "https://dev.api.pokemon.com",
-        "qa": "https://qa.api.pokemon.com",
-        "production": "https://api.pokemon.com"
-      }
-    }
-  }
-}
-```
-
-## 🔍 Pruebas en Vercel QA
+Ejecuta los siguientes comandos para preparar tu aplicación:
 
 ```bash
-vercel --target staging --env QA
-vercel env ls  # Verificar variables
+# Instalación de todas las dependencias necesarias
+npm ci --production
+
+# Generación de archivos optimizados para producción
+npm run build -- --configuration production
 ```
 
-## 🛡️ Seguridad por Entorno
+**Validaciones recomendadas**:
+- Confirmar que el proceso de construcción finaliza sin errores
+- Verificar que se genera el directorio de distribución con todos los recursos
+- Revisar el tamaño de los bundles generados
 
-```json
-{
-  "headers": {
-    "qa": [
-      {
-        "source": "/*",
-        "headers": [
-          {"key": "X-Robots-Tag", "value": "noindex"}
-        ]
-      }
-    ],
-    "production": [
-      {
-        "source": "/*",
-        "headers": [
-          {"key": "Strict-Transport-Security", "value": "max-age=63072000"}
-        ]
-      }
-    ]
-  }
-}
+<!-- Opción como figura (compatible con algunos renderers) -->
+<figure>
+    <img src="https://i.ibb.co/dw2VT1g6/msedge-n-YXTDg2w-Em.jpg" alt="Visualización del proceso">
+    <figcaption>Figura 1: Proceso de desarrollo y despliegue</figcaption>
+</figure>
+
+## 🔒 Configuración de Seguridad Avanzada
+
+Crea o modifica el archivo de configuración `vercel.json` con directivas de seguridad optimas.
+
+## 🚀 Proceso de Publicación en Vercel
+
+### Opción A: Mediante Interfaz Gráfica (GUI)
+
+1. Navega al [panel de control de Vercel](https://vercel.com/dashboard)
+2. Selecciona "Nuevo Proyecto" > "Importar Repositorio Git"
+3. Configura los parámetros específicos:
+   - Preset del framework: Angular
+   - Comando de construcción: `npm run build`
+   - Directorio de salida: `dist/pokedex`
+
+### Opción B: Usando Terminal (CLI)
+
+```bash
+# Instalación global de la interfaz de línea de comandos
+npm i -g vercel@latest
+
+# Autenticación e inicio del despliegue
+vercel login
+vercel --prod
 ```
 
-## 🔄 Pipeline CI/CD
+## 🧪 Validación Post-Implementación
 
-1. **Push a feature/*** → Tests unitarios + Preview Deployment
-2. **Merge a develop** → Tests integración + Staging
-3. **Release tag** → Smoke tests + Producción
+Realiza estas comprobaciones esenciales:
+
+1. **Pruebas funcionales**:
+   - Accede a la URL generada automáticamente
+   - Verifica la carga completa de la interfaz
+   - Confirma el funcionamiento de todas las rutas
+
+2. **Auditoría de rendimiento**:
+   - Ejecuta Lighthouse desde Chrome DevTools
+   - Verifica puntuaciones superiores a 90 en performance
+
+3. **Comprobación de seguridad**:
+   - Analiza los headers con securityheaders.com
+   - Revisa posibles vulnerabilidades con Snyk
+
+## 🌐 Personalización Avanzada
+
+### Configuración de Dominio Personalizado
+
+1. En el panel de Vercel, navega a "Settings" > "Domains"
+2. Introduce tu dominio completo (ej: app.tudominio.xyz)
+3. Configura los registros DNS según el proveedor:
+   - Para Cloudflare: CNAME → cname.vercel-dns.com
+   - Para AWS Route53: Registro ALIAS
+
+### Variables de Entorno Críticas
+
+Establece estas variables en "Environment Variables":
+```env
+NODE_ENV=production
+API_BASE=https://api.pokemontcg.io/v2
+ENABLE_ANALYTICS=true
+```
+
+## 🛠️ Resolución de Incidencias Comunes
+
+**Problema**: Errores 502 Bad Gateway  
+**Solución**: 
+- Verificar timeout en vercel.json
+- Aumentar memoria asignada
+
+**Problema**: Imágenes no cargan  
+**Solución**: 
+- Ampliar directivas CSP para img-src
+- Verificar URLs absolutas
+
+**Problema**: Lento First Contentful Paint  
+**Solución**:
+- Habilitar auto-static optimization
+- Implementar lazy loading
+
+## 🔄 Gestión de Actualizaciones
+
+Vercel ofrece despliegue continuo automático:
+1. Realiza modificaciones en tu código base
+2. Confirma los cambios:
+```bash
+git commit -am "Mejoras en UI"
+git push origin main
+```
+3. Monitorea el proceso en "Deployments"
+
+## 🛡️ Explicación Técnica: Headers de Seguridad
+
+**Content-Security-Policy**  
+Establece reglas estrictas sobre qué recursos pueden cargarse, previniendo ataques XSS e inyección de código malicioso.
+
+**HTTP Strict Transport Security**  
+Fuerza conexiones HTTPS y previene ataques de downgrade, con cache prolongado para mejor performance.
+
+**X-Content-Type-Options**  
+Anula el "MIME sniffing" del navegador, evitando ejecución de archivos como código ejecutable.
+
+**Feature-Policy**  
+Controla el acceso a APIs del navegador como geolocalización o cámara, reduciendo superficie de ataque.
 
 ---
 
-<div align="center" style="margin-top: 40px;">
-  <img src="https://i.ibb.co/dw2VT1g6/msedge-n-YXTDg2w-Em.jpg" alt="Resumen visual" width="600" style="border: 1px solid #eee; padding: 10px; background: white;">
-</div>
-```
-
-He integrado la imagen:
-1. Al inicio como diagrama principal
-2. Al final como resumen visual
-3. Con estilo profesional (sombra, borde redondeado)
-4. Tamaño responsive (800px ancho inicial, 600px final)
-5. Pie de foto descriptivo
-6. Diseño centrado y con buen espaciado
-
-El resto del contenido mantiene:
-- Todos los elementos técnicos importantes
-- Configuraciones específicas para Visual Studio
-- Flujo completo CI/CD
-- Segmentación por entornos
-- Medidas de seguridad diferenciadas
+💡 **Recomendación profesional**: Implementa monitoreo continuo con [Vercel Analytics](https://vercel.com/analytics) y [Sentry](https://sentry.io) para detectar errores en tiempo real.

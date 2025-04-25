@@ -24,7 +24,7 @@ Una vez creada la cuenta, podemos empezar a desplegar la aplicación:
 ### 2.1. Crea un Proyecto
 - Desde la ventana de Vercel, navegamos hasta el menú de "Add New.." y luego en "Project"
 - Se desplegara la lista de repositorios que tenemos asociados a Github
-- Elegimos el repositorio que contiene el proyecto (para este caso: PokeDex)
+- Elegimos el repositorio que contiene el proyecto
 
 ### 2.2. Configuración de Framework y Comandos
 - **Framework Preset**: selecciona el que usas (React, Angular, Next.js, etc.)
